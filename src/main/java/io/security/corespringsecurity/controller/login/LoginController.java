@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 @Controller
 public class LoginController {
@@ -26,12 +27,10 @@ public class LoginController {
 
 	@GetMapping(value = "/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null){
-			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		if(authentication != null){
+			new SecurityContextLogoutHandler().logout(request,response,authentication);
 		}
-
 		return "redirect:/login";
 	}
 
