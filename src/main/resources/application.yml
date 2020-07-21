@@ -1,3 +1,5 @@
+server:
+  port: 8804
 spring:
   profiles:
     active: local
