@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@ToString(exclude = {"userRoles"})
+@ToString()
 @Builder
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor

@@ -25,19 +25,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				//DB에서 Account객체 조회
+        //DB에서 Account객체 조회
         Account account = userRepository.findByUsername(username);
-        if(Objects.isNull(account)){
+        if (Objects.isNull(account)) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
-				// 권한 정보 등록
+        // 권한 정보 등록
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(account.getRole()));
-				
-				//AccountContext 생성자로 UserDetails 타입 생성
+
+        //AccountContext 생성자로 UserDetails 타입 생성
         AccountContext accountContext = new AccountContext(account, roles);
 
-        return  accountContext;
+        return accountContext;
     }
 
 }
