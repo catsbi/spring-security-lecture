@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.provider;
 
 import io.security.corespringsecurity.security.common.FormWebAuthenticationDetails;
+import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import io.security.corespringsecurity.service.AccountContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-public class FormAuthenticationProvider implements AuthenticationProvider {
+public class AjaxAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -31,20 +32,11 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("BadCredentialsException");
         }
 
-        FormWebAuthenticationDetails details = (FormWebAuthenticationDetails) authentication.getDetails();
-        String secretKey = details.getSecretKey();
-        if(secretKey == null || !"secret".equals(secretKey)){
-            throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
-        }
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                accountContext.getAccount(), null, accountContext.getAuthorities());
-
-        return authenticationToken;
+        return new AjaxAuthenticationToken(accountContext.getAccount(), null, accountContext.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+        return authentication.equals(AjaxAuthenticationToken.class);
     }
 }
