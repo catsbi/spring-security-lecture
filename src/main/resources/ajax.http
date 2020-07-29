@@ -29,7 +29,7 @@ Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 
 ### Send POST request with body as parameters
-POST http://localhost:8804/mypage
+GET http://localhost:8804/api/admin/user
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 

@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@ToString()
+@ToString(exclude = {"userRoles"})
 @Builder
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
@@ -32,13 +32,10 @@ public class Account implements Serializable {
     @Column
     private String password;
 
-    @Column
-    private String role;
-
-    /*@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = {
             @JoinColumn(name = "role_id") })
-    private Set<Role> userRoles = new HashSet<>();*/
+    private Set<Role> userRoles = new HashSet<>();
 }
 
 

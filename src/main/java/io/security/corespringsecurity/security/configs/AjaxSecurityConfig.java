@@ -53,7 +53,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(ajaxAccessDeniedHandler())
                 ;
 
-        http.csrf().disable();
+//        http.csrf().disable();
     }
     @Bean
     public AccessDeniedHandler ajaxAccessDeniedHandler() {
