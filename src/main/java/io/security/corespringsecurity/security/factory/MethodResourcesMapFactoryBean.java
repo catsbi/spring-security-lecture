@@ -13,37 +13,41 @@ public class MethodResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<
 
     private SecurityResourceService securityResourceService;
     private String resourceType;
+    private LinkedHashMap<String, List<ConfigAttribute>> resourcesMap;
 
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
+    }
+
+    public void setResourcesMap(LinkedHashMap<String, List<ConfigAttribute>> resourcesMap) {
+        this.resourcesMap = resourcesMap;
     }
 
     public void setSecurityResourceService(SecurityResourceService securityResourceService) {
         this.securityResourceService = securityResourceService;
     }
 
-    private LinkedHashMap<String, List<ConfigAttribute>> resourcesMap;
-
-    public void init() {
-        if ("method".equals(resourceType)) {
-            resourcesMap = securityResourceService.getMethodResourceList();
-        }else if("pointcut".equals(resourceType)){
-            resourcesMap = securityResourceService.getPointcutResourceList();
-        }
-    }
-
+    @Override
     public LinkedHashMap<String, List<ConfigAttribute>> getObject() {
-        if (resourcesMap == null) {
+        if(resourcesMap == null){
             init();
         }
         return resourcesMap;
     }
+    public void init(){
+        if("method".equals(resourceType)){
+            resourcesMap = securityResourceService.getMethodResourceList();
+        } else if("pointcut".equals(resourceType)){
+            resourcesMap = securityResourceService.getPointcutResourceList();
+        }
+    }
 
-    @SuppressWarnings("rawtypes")
-    public Class<LinkedHashMap> getObjectType() {
+    @Override
+    public Class<?> getObjectType() {
         return LinkedHashMap.class;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }

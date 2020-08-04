@@ -65,6 +65,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         userRoles.add(userRole);
         createResourceIfNotFound("/admin/**", "", adminRoles, "url");
         createResourceIfNotFound("/config/**", "", managerRoles, "url");
+        createResourceIfNotFound("io.security.corespringsecurity.aopsecurity.AopMethodService.methodSecured", "", managerRoles, "method");
         createResourceIfNotFound("execution(public * io.security.corespringsecurity.aopsecurity.*Service.pointcut*(..))", "", adminRoles, "pointcut");
         createUserIfNotFound("admin", "admin@test.com", "1234", adminRoles);
         createUserIfNotFound("user", "user@test.com", "1234", userRoles);
